@@ -1,4 +1,4 @@
-package com.spring.taskmanager.model;
+package com.spring.taskmanager.models;
 
 import com.spring.taskmanager.services.TaskService;
 

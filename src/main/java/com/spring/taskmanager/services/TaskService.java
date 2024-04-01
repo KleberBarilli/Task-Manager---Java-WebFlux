@@ -1,17 +1,18 @@
 package com.spring.taskmanager.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.spring.taskmanager.model.Task;
+import com.spring.taskmanager.models.Task;
 
 import reactor.core.publisher.Mono;
 
 @Service
 public class TaskService {
 
-    public static List<Task> taskList;
+    public static List<Task> taskList = new ArrayList<>();
 
     public Mono<Task> insert(Task task) {
         return Mono.just(task).map(Task::insert).flatMap(this::save);

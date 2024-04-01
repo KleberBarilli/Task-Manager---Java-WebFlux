@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TaskManagerApplication {
 
 	public static void main(String[] args) {
+		System.out.println("Swagger ui available at: http://localhost:8080/swagger-ui.html");
 		SpringApplication.run(TaskManagerApplication.class, args);
 	}
 
