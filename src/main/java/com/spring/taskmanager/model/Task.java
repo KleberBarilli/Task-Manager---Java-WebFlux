@@ -1,10 +1,31 @@
 package com.spring.taskmanager.model;
 
+import com.spring.taskmanager.services.TaskService;
+
 public class Task {
     private String title;
     private String description;
     private int priority;
     private TaskState state;
+
+    public Task() {
+    }
+
+    public Task(Builder builder) {
+        this.title = builder.title;
+        this.description = builder.description;
+        this.priority = builder.priority;
+        this.state = builder.state;
+    }
+
+    public Task newTask() {
+        TaskService.taskList.add(this);
+        return this;
+    }
+
+    public Task insert() {
+        return builderFrom(this).withState(TaskState.TO_DO).build();
+    }
 
     public String getTitle() {
         return title;
@@ -38,4 +59,61 @@ public class Task {
         this.state = state;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static Builder builderFrom(Task task) {
+        return new Builder()
+                .withTitle(task.getTitle())
+                .withDescription(task.getDescription())
+                .withPriority(task.getPriority())
+                .withState(task.getState());
+    }
+
+    public static class Builder {
+        private String title;
+        private String description;
+        private int priority;
+        private TaskState state;
+
+        public Builder() {
+        }
+
+        public Builder(Task task) {
+            this.title = task.getTitle();
+            this.description = task.getDescription();
+            this.priority = task.getPriority();
+            this.state = task.getState();
+        }
+
+        public Builder withTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder withPriority(int priority) {
+            this.priority = priority;
+            return this;
+        }
+
+        public Builder withState(TaskState state) {
+            this.state = state;
+            return this;
+        }
+
+        public Task build() {
+            Task task = new Task(this);
+            task.setTitle(this.title);
+            task.setDescription(this.description);
+            task.setPriority(this.priority);
+            task.setState(this.state);
+            return task;
+        }
+    }
 }
