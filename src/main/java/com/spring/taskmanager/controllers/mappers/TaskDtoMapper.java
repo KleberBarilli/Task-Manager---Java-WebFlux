@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.spring.taskmanager.controllers.dtos.TaskDto;
 import com.spring.taskmanager.models.Task;
+import com.spring.taskmanager.models.TaskState;
 
 @Component
 public class TaskDtoMapper {
@@ -18,6 +19,7 @@ public class TaskDtoMapper {
         return Optional.ofNullable(task)
                 .map(t -> {
                     TaskDto taskDto = new TaskDto();
+                    taskDto.setId(t.getId());
                     taskDto.setTitle(t.getTitle());
                     taskDto.setDescription(t.getDescription());
                     taskDto.setPriority(t.getPriority());
@@ -27,9 +29,14 @@ public class TaskDtoMapper {
                 .orElse(null);
     }
 
+    public Task convert(String id, String title, int priority, String description, TaskState state) {
+        return Task.builder().withId(id).withTitle(title).withPriority(priority).withDescription(description)
+                .withState(state).build();
+    }
+
     public Task mapper(TaskDto taskDto) {
         return Optional.ofNullable(taskDto)
-                .map(t -> Task.builder().withTitle(t.getTitle()).withDescription(t.getDescription())
+                .map(t -> Task.builder().withId(t.getId()).withTitle(t.getTitle()).withDescription(t.getDescription())
                         .withPriority(t.getPriority())
                         .withState(t.getState()).build())
                 .orElse(null);
